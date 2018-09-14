@@ -139,4 +139,27 @@ class BiCircleStepView(ctx : Context) : View(ctx) {
             state.startUpdating(cb)
         }
     }
+
+    data class BiCircleStep(var i : Int) {
+        private var root : BCSNode = BCSNode(i + 1)
+        private var curr : BCSNode = root
+        private var dir : Int = 1
+
+        fun draw(canvas : Canvas, paint : Paint) {
+            root.draw(canvas, paint)
+        }
+
+        fun update(cb : (Int, Float) -> Unit) {
+            curr.update {i, scl ->
+                curr = curr.getNext(dir) {
+                    dir *= -1
+                }
+                cb(i, scl)
+            }
+        }
+
+        fun startUpdating(cb : () -> Unit) {
+            curr.startUpdating(cb)
+        }
+    }
 }
