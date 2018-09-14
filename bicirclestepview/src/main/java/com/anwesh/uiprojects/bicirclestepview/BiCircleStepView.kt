@@ -4,6 +4,7 @@ package com.anwesh.uiprojects.bicirclestepview
  * Created by anweshmishra on 14/09/18.
  */
 
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.graphics.Canvas
@@ -182,6 +183,14 @@ class BiCircleStepView(ctx : Context) : View(ctx) {
             bcs.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : BiCircleStepView {
+            val view : BiCircleStepView = BiCircleStepView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
