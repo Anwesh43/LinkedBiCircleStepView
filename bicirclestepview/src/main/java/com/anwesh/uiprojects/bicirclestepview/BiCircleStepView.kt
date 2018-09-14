@@ -24,9 +24,11 @@ fun Canvas.drawBCSNode(i : Int, scale : Float, paint : Paint) {
     save()
     translate(gap + i * gap, h/2)
     for (j in 0..1) {
+        val sf : Float = 1f - 2 * (j % 2)
         val sc : Float = Math.min(0.5f, Math.max(0f, scale - j * 0.5f)) * 2
         save()
-        translate(0f, (h -r) * sc)
+        translate(0f, (h/2 -r) * sc * sf)
+        rotate(180f * sc)
         drawArc(RectF(-r, -r , r, r), 180f * j, 180f, true, paint)
         restore()
     }
@@ -143,7 +145,7 @@ class BiCircleStepView(ctx : Context) : View(ctx) {
     }
 
     data class BiCircleStep(var i : Int) {
-        private var root : BCSNode = BCSNode(i + 1)
+        private var root : BCSNode = BCSNode(0)
         private var curr : BCSNode = root
         private var dir : Int = 1
 
