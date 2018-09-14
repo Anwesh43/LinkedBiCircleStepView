@@ -162,4 +162,26 @@ class BiCircleStepView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : BiCircleStepView) {
+
+        private val animator : Animator = Animator(view)
+        private val bcs : BiCircleStep = BiCircleStep(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(Color.parseColor("#BDBDBD"))
+            bcs.draw(canvas, paint)
+            animator.animate {
+                bcs.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            bcs.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
